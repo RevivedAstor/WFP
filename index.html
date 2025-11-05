@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link rel="stylesheet" href="css/login.css">
+  <title>Memory Game</title>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <img src="" alt="MemoryWebLogo">
+      </a>
+
+      <h1>Memory Game</h1>
+
+      <button id="theme-toggle" class="theme-btn">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container" id="container">
+
+      <!-- ==================== SIGN-UP ==================== -->
+
+      <div class="form-container sign-up">
+        <form id="signup-form">
+          <h1>Create Account</h1>
+          <span>Use your email for registeration</span>
+          <input id="signup-name" type="text" placeholder="Name" required>
+          <input id="signup-email" type="email" placeholder="Email" required>
+          <input id="signup-pass" type="password" placeholder="Password" required>
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+
+      <!-- ==================== SIGN-IN ==================== -->
+      <div class="form-container sign-in">
+        <form id="signin-form">
+          <h1>Sign In</h1>
+          <span>Use your email password</span>
+          <input id="signin-email" type="email" placeholder="Email" required>
+          <input id="signin-pass" type="password" placeholder="Password" required>
+          <!-- <a href="#">Forgot Your Password?</a> -->
+          <button type="submit">Sign In</button>
+        </form>
+      </div>
+
+      <!-- ================== TOGGLE THINGAMABOB ================== -->
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Welcome Back!</h1>
+            <p>Miss us and want to boost your memory? Sign in and boost your brain.</p>
+            <button class="hidden" id="login">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Hello!</h1>
+            <p>Want to play? Register now to start pumping up your memory.</p>
+            <button class="hidden" id="register">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Memory Game | Все права защищены.
+  </footer>
+
+  <script src="js/login.js"></script>
+</body>
+
+</html>

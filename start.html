@@ -1,0 +1,79 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/start.css">
+</head>
+
+<body>
+  <div class="navbar">
+    <a href="#" class="logo">MemoryWebLogo</a>
+    <h1>Memory Game</h1>
+    <div class="theme-btn" id="themeBtn">☀️</div>
+  </div>
+
+  <main>
+    <div class="container-custom">
+      <div class="form-container">
+        <div class="content">
+          <h2 id="welcome-text">Welcome to Memory Game</h2>
+          <p>Train your brain and test your memory skills!</p>
+
+          <div class="btn-group">
+            <button id="playBtn">Play</button>
+            <button id="settingsBtn">Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Memory Game | Все права защищены.
+  </footer>
+
+  <div id="playModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Play</h2>
+      <button id="selectGameBtn">Select Game</button>
+      <button id="continueBtn">Continue</button>
+      <button class="close-modal-btn">Close</button>
+    </div>
+  </div>
+
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Settings</h2>
+
+      <div class="setting">
+        <label>🌍 Language:</label>
+        <select id="langSelect">
+          <option selected>English</option>
+          <option>Русский</option>
+          <option>Қазақша</option>
+        </select>
+      </div>
+
+      <div class="setting">
+        <label>📏 Grid Size:</label>
+        <select id="gridSizeSelect">
+          <option>4x4</option>
+          <option>8x8</option>
+          <option>16x16</option>
+        </select>
+      </div>
+
+      <button id="applyBtn">Apply</button>
+      <button class="close-modal-btn">Close</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/start.js"></script>
+</body>
+
+</html>
