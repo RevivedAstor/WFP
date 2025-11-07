@@ -43,7 +43,7 @@ signUpForm.addEventListener('submit', async (e) => {
     const data = await response.json();
     // console.log('Registered:', data);
     // alert('Registration successful!');
-    localStorage.setItem('currentUser', JSON.stringify({ name: data.username }));
+    localStorage.setItem('currentUser', JSON.stringify({ name: data.user.username }));
     window.location.href = 'start.html';
   } catch (err) {
     console.error(err);
