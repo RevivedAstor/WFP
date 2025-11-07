@@ -16,8 +16,8 @@ loginBtn.addEventListener('click', () => {
 const signUpForm = document.getElementById('signup-form');
 
 signUpForm.addEventListener('submit', async (e) => {
-  e.preventDefault(); // stops page from refreshing
-  
+  e.preventDefault();
+
   const name = document.getElementById('signup-name').value.trim();
   const email = document.getElementById('signup-email').value.trim().toLowerCase();
   const pass = document.getElementById('signup-pass').value;
@@ -28,24 +28,25 @@ signUpForm.addEventListener('submit', async (e) => {
   }
 
   try {
-    const response = await fetch('http://localhost:5000/api/users/register', {
+    const response = await fetch('https://wfp.onrender.com/api/users/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: name, email, password: pass })
     });
 
-    const data = await response.json()
-
-    if (response.ok) {
-      // store current user in localStorage so the rest of the site still works
-      localStorage.setItem('currentUser', JSON.stringify({ name: data.username}));
-      window.location.href = 'start.html';
-    } else {
+    if (!response.ok) {
+      const data = await response.json();
       alert(data.error || 'Registration failed');
+      return;
     }
+
+    const data = await response.json();
+    console.log('Registered:', data);
+    alert('Registration successful!');
+    window.location.href = 'start.html';
   } catch (err) {
-    console.error('Error', err);
-    alert('Server unreachable');
+    console.error(err);
+    alert('Server unavailable.');
   }
 });
 
@@ -53,9 +54,9 @@ signUpForm.addEventListener('submit', async (e) => {
 
 const signInForm = document.getElementById('signin-form');
 
-signInForm.addEventListener('submit', async e => {
+signInForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  
+
   const email = document.getElementById('signin-email').value.trim().toLowerCase();
   const pass = document.getElementById('signin-pass').value;
 
@@ -65,7 +66,7 @@ signInForm.addEventListener('submit', async e => {
   }
 
   try {
-    const response = await fetch('http://localhost:500/api/users/login', {
+    const response = await fetch('https://wfp.onrender.com/api/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password: pass })
@@ -73,14 +74,17 @@ signInForm.addEventListener('submit', async e => {
 
     const data = await response.json();
 
-    if (response.ok) {
-      localStorageStorage.setItem('currentUser', JSON.stringify({ name: data.user.username }));
-      window.location.href = 'start.html';
-    } else {
+    if (!response.ok) {
       alert(data.error || 'Login failed');
+      return;
     }
+
+    // Save minimal session info client-side
+    localStorage.setItem('currentUser', JSON.stringify({ name: data.username }));
+    window.location.href = 'start.html';
   } catch (err) {
-    console.error('Error:', err);
-    alert('Server unreachable');
+    console.error(err);
+    alert('Server unavailable.');
   }
 });
+

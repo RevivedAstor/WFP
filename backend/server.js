@@ -10,6 +10,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(cors({
+  origin: '*'  // or specify your frontend domain later
+}));
+
 // Routes
 app.use('/api/users', userRoutes);
 
