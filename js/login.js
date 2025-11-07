@@ -12,19 +12,8 @@ loginBtn.addEventListener('click', () => {
 });
 
 
-// helper function to hash the password
-
-async function sha256(str) {
-  const msgBuffer = new TextEncoder().encode(str);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-
 // signup logic is here
 const signUpForm = document.getElementById('signup-form');
-
 
 signUpForm.addEventListener('submit', async (e) => {
   e.preventDefault(); // stops page from refreshing
@@ -38,21 +27,26 @@ signUpForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  // check if user already exists
-  const users = JSON.parse(localStorage.getItem('memoryGameUsers') || '{}');
-  if (users[email]) {
-    alert('This email is already registered');
-    return;
+  try {
+    const response = await fetch('http://localhost:5000/api/users/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: name, email, password: pass })
+    });
+
+    const data = await response.json()
+
+    if (response.ok) {
+      // store current user in localStorage so the rest of the site still works
+      localStorage.setItem('currentUser', JSON.stringify({ name: data.username}));
+      window.location.href = 'start.html';
+    } else {
+      alert(data.error || 'Registration failed');
+    }
+  } catch (err) {
+    console.error('Error', err);
+    alert('Server unreachable');
   }
-
-  // store hashed password
-  const hash = await sha256(pass)
-  users[email] = {name, hash};
-  localStorage.setItem('memoryGameUsers', JSON.stringify(users));
-
-  // log the user in immediately
-  localStorage.setItem('currentUser', JSON.stringify({ name: name || email.split('@')[0]}));
-  window.location.href = 'start.html'
 });
 
 
@@ -70,21 +64,23 @@ signInForm.addEventListener('submit', async e => {
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem('memoryGameUsers') || '{}');
-  const user = users[email];
+  try {
+    const response = await fetch('http://localhost:500/api/users/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass })
+    });
 
-  if (!user) {
-    alert('No account found with that email');
-    return;
+    const data = await response.json();
+
+    if (response.ok) {
+      localStorageStorage.setItem('currentUser', JSON.stringify({ name: data.user.username }));
+      window.location.href = 'start.html';
+    } else {
+      alert(data.error || 'Login failed');
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    alert('Server unreachable');
   }
-
-  const hash = await sha256(pass);
-  if (hash !== user.hash) {
-    alert('Incorrect password');
-    return
-  }
-
-  // successful login
-  localStorage.setItem('currentUser', JSON.stringify({name: user.name || email.split('@')[0] }));
-  window.location.href = 'start.html'
 });
