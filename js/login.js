@@ -41,8 +41,9 @@ signUpForm.addEventListener('submit', async (e) => {
     }
 
     const data = await response.json();
-    console.log('Registered:', data);
-    alert('Registration successful!');
+    // console.log('Registered:', data);
+    // alert('Registration successful!');
+    localStorage.setItem('currentUser', JSON.stringify({ name: data.username }));
     window.location.href = 'start.html';
   } catch (err) {
     console.error(err);
@@ -73,14 +74,15 @@ signInForm.addEventListener('submit', async (e) => {
     });
 
     const data = await response.json();
+    
 
     if (!response.ok) {
       alert(data.error || 'Login failed');
       return;
     }
 
-    // Save minimal session info client-side
-    localStorage.setItem('currentUser', JSON.stringify({ name: data.username }));
+    // save minimal session info client-side
+    localStorage.setItem('currentUser', JSON.stringify({ name: data.user.username }));
     window.location.href = 'start.html';
   } catch (err) {
     console.error(err);
