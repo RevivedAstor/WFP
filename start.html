@@ -16,15 +16,36 @@
   </div>
 
   <main>
-    <div class="container-custom">
-      <div class="form-container">
-        <div class="content">
-          <h2 id="welcome-text">Welcome to Memory Game</h2>
-          <p>Train your brain and test your memory skills!</p>
+    <div class="main-content-wrapper">
+      <!-- Left Section: Play & Settings -->
+      <div class="container-custom left-section">
+        <div class="form-container">
+          <div class="content">
+            <h2 id="welcome-text">Welcome to Memory Game</h2>
+            <p>Train your brain and test your memory skills!</p>
 
-          <div class="btn-group">
-            <button id="playBtn">Play</button>
-            <button id="settingsBtn">Settings</button>
+            <div class="btn-group">
+              <button id="playBtn">Play</button>
+              <button id="settingsBtn">Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Section: Leaderboard -->
+      <div class="container-custom right-section">
+        <div class="leaderboard">
+          <h2>🏆 Leaderboard</h2>
+          <div class="leaderboard-filters">
+            <select id="difficultyFilter" class="filter-select">
+              <option value="all">All Difficulties</option>
+              <option value="4x4">4x4</option>
+              <option value="8x8">8x8</option>
+              <option value="16x16">16x16</option>
+            </select>
+          </div>
+          <div class="leaderboard-list" id="leaderboardList">
+            <div class="loading-spinner">Loading...</div>
           </div>
         </div>
       </div>
