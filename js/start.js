@@ -1,5 +1,3 @@
-
-
 // buttons
 document.getElementById('selectGameBtn')?.addEventListener('click', () => {
 	localStorage.setItem('mode', 'new');
@@ -11,7 +9,102 @@ document.getElementById('continueBtn')?.addEventListener('click', () => {
 	window.location.href = 'game.html';
 });
 
+// Leaderboard API functions
+async function fetchLeaderboard(difficulty = 'all') {
+	try {
+		const url = difficulty === 'all' 
+			? 'https://wfp.onrender.com/api/leaderboard'
+			: `https://wfp.onrender.com/api/leaderboard?difficulty=${difficulty}`;
+		
+		const response = await fetch(url);
+		
+		if (!response.ok) {
+			throw new Error('Failed to fetch leaderboard');
+		}
+		
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching leaderboard:', error);
+		return [];
+	}
+}
 
+async function saveGameResult(username, difficulty, time) {
+	try {
+		const response = await fetch('https://wfp.onrender.com/api/leaderboard', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				username,
+				difficulty,
+				time
+			})
+		});
+		
+		if (!response.ok) {
+			throw new Error('Failed to save game result');
+		}
+		
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error saving game result:', error);
+		return null;
+	}
+}
+
+function formatTime(seconds) {
+	const mins = Math.floor(seconds / 60);
+	const secs = seconds % 60;
+	return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+}
+
+function renderLeaderboard(data) {
+	const leaderboardList = document.getElementById('leaderboardList');
+	
+	if (!data || data.length === 0) {
+		leaderboardList.innerHTML = '<div class="empty-leaderboard">No records yet. Be the first!</div>';
+		return;
+	}
+	
+	let html = '';
+	data.forEach((entry, index) => {
+		const rank = index + 1;
+		let rankClass = 'leaderboard-rank';
+		
+		if (rank === 1) rankClass += ' gold';
+		else if (rank === 2) rankClass += ' silver';
+		else if (rank === 3) rankClass += ' bronze';
+		
+		const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+		
+		html += `
+			<div class="leaderboard-item">
+				<div class="${rankClass}">${medal}</div>
+				<div class="leaderboard-info">
+					<div class="leaderboard-name">${entry.username || 'Anonymous'}</div>
+					<div class="leaderboard-details">${entry.difficulty || 'Unknown'} • ${new Date(entry.date || Date.now()).toLocaleDateString()}</div>
+				</div>
+				<div class="leaderboard-time">${formatTime(entry.time)}</div>
+			</div>
+		`;
+	});
+	
+	leaderboardList.innerHTML = html;
+}
+
+async function loadLeaderboard(difficulty = 'all') {
+	const leaderboardList = document.getElementById('leaderboardList');
+	leaderboardList.innerHTML = '<div class="loading-spinner">Loading...</div>';
+	
+	const data = await fetchLeaderboard(difficulty);
+	renderLeaderboard(data);
+}
+
+// Expose function globally so game.html can call it
+window.saveGameResult = saveGameResult;
+window.loadLeaderboard = loadLeaderboard;
 
 $(document).ready(function () {
 
@@ -29,7 +122,11 @@ $(document).ready(function () {
 			settingsTitle: 'Settings',
 			language: '🌍 Language:',
 			gridSize: '📏 Grid Size:',
-			apply: 'Apply'
+			apply: 'Apply',
+			leaderboard: '🏆 Leaderboard',
+			allDifficulties: 'All Difficulties',
+			loading: 'Loading...',
+			noRecords: 'No records yet. Be the first!'
 		},
 		Русский: {
 			welcome: 'Добро пожаловать в Memory Game',
@@ -44,7 +141,11 @@ $(document).ready(function () {
 			settingsTitle: 'Настройки',
 			language: '🌍 Язык:',
 			gridSize: '📏 Размер сетки:',
-			apply: 'Применить'
+			apply: 'Применить',
+			leaderboard: '🏆 Таблица лидеров',
+			allDifficulties: 'Все сложности',
+			loading: 'Загрузка...',
+			noRecords: 'Пока нет записей. Будьте первым!'
 		},
 		Қазақша: {
 			welcome: 'Memory Gameге қош келдіңіз',
@@ -59,7 +160,11 @@ $(document).ready(function () {
 			settingsTitle: 'Баптаулар',
 			language: '🌍 Тіл:',
 			gridSize: '📏 Тор өлшемі:',
-			apply: 'Қолдану'
+			apply: 'Қолдану',
+			leaderboard: '🏆 Көшбасшылар тақтасы',
+			allDifficulties: 'Барлық қиындықтар',
+			loading: 'Жүктелуде...',
+			noRecords: 'Әзірге жазба жоқ. Бірінші болыңыз!'
 		}
 	};
 
@@ -86,6 +191,9 @@ $(document).ready(function () {
 		$('.setting label').eq(1).text(t.gridSize);
 		$('#applyBtn').text(t.apply);
 		$('#settingsModal .close-modal-btn').text(t.close);
+		
+		$('.leaderboard h2').text(t.leaderboard);
+		$('#difficultyFilter option[value="all"]').text(t.allDifficulties);
 
 		localStorage.setItem('language', lang);
 	}
@@ -148,6 +256,15 @@ $(document).ready(function () {
 
 	$('#langSelect').val(savedLang);
 	changeLanguage(savedLang);
+
+	// Leaderboard filter
+	$('#difficultyFilter').on('change', function () {
+		const difficulty = $(this).val();
+		loadLeaderboard(difficulty);
+	});
+
+	// Initial leaderboard load
+	loadLeaderboard('all');
 
 	$(document).on('keydown', function (e) {
 		if (e.key === 'Escape') {
