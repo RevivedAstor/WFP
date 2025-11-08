@@ -21,9 +21,15 @@ signUpForm.addEventListener('submit', async (e) => {
   const name = document.getElementById('signup-name').value.trim();
   const email = document.getElementById('signup-email').value.trim().toLowerCase();
   const pass = document.getElementById('signup-pass').value;
+  const confirmPass = document.getElementById('signup-confirm-pass').value;
 
-  if (!name || !email || !pass) {
+  if (!name || !email || !pass || !confirmPass) {
     alert('Please fill in all fields');
+    return;
+  }
+
+  if (pass !== confirmPass) {
+    alert('Passwords do not match!');
     return;
   }
 
@@ -34,16 +40,17 @@ signUpForm.addEventListener('submit', async (e) => {
       body: JSON.stringify({ username: name, email, password: pass })
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
       const data = await response.json();
       alert(data.error || 'Registration failed');
       return;
     }
 
-    const data = await response.json();
-    // console.log('Registered:', data);
-    // alert('Registration successful!');
-    localStorage.setItem('currentUser', JSON.stringify({ name: data.user.username }));
+    
+    console.log('Registered:', data);
+    localStorage.setItem('currentUser', JSON.stringify({ name: data.username }));
     window.location.href = 'start.html';
   } catch (err) {
     console.error(err);
@@ -82,6 +89,8 @@ signInForm.addEventListener('submit', async (e) => {
     }
 
     // save minimal session info client-side
+    // for some reason, even if I change the flow of the data from login route, it still comes as {'Login successful', user: {...}}
+    // so I just adjusted to that instead of trying to fix it backend-side for now
     localStorage.setItem('currentUser', JSON.stringify({ name: data.user.username }));
     window.location.href = 'start.html';
   } catch (err) {
