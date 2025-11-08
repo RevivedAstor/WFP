@@ -797,3 +797,16 @@ body.dark-theme button.close-modal-btn:hover{
     font-size: 1.2rem;
   }
 } 
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #3a3a3a;
+  font-weight: 600;
+}
+.logo img {
+  height: 130px;
+}
+
