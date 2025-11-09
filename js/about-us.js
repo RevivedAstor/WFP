@@ -17,3 +17,19 @@ if (themeToggleBtn) {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 }  
+
+const slider = document.querySelector('.team-slider');
+const leftBtn = document.querySelector('.slide-btn.left');
+const rightBtn = document.querySelector('.slide-btn.right');
+
+if (slider) {
+  const step = 305;
+  
+  rightBtn.addEventListener('click', () => {
+    slider.scrollBy({ left: step, behavior: 'smooth' });
+  });
+
+  leftBtn.addEventListener('click', () => {
+    slider.scrollBy({ left: -step, behavior: 'smooth' });
+  });
+}

@@ -10,7 +10,8 @@
 body{
     background-color: #c9d6ff;
     background: linear-gradient(to right, #e2e2e2, #c9d6ff);
-    overflow: hidden;  
+    overflow-x: hidden; 
+    transition: background 0.3s ease;
 }
 
 header{
@@ -221,6 +222,7 @@ footer{
 }
 
 .navbar h1{
+    color: #7f0ba2;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -265,8 +267,6 @@ body.dark-theme .container form {
   color: #e5e5e5;
 }
 
-body.dark-theme .navbar h1,
-body.dark-theme .logo,
 body.dark-theme footer {
   color: #e5e5e5;
 }
