@@ -113,4 +113,11 @@ themeToggle.onclick = () => {
   themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 };
 
+const backBtn = document.getElementById("backBtn");
+
+backBtn.onclick = () => {
+  window.location.href = "start.html"; 
+};
+
+
 startGame();
