@@ -1,6 +1,5 @@
-const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-const username = currentUser.username || 'Anonymous';
-
+const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+const name = user.name || 'Player';
 
 
 
@@ -81,7 +80,7 @@ function showTargetsThenHide() {
   }, 1000 + level * 150);
 }
 
-function onTileClick(e) {
+async function onTileClick(e) {
   if (!clickable) return;
   const tile = e.currentTarget;
   const idx = Number(tile.dataset.index);
@@ -116,11 +115,11 @@ function onTileClick(e) {
           console.error('Save failed', e);
           alert('Score saved locally');
         } finally {
-          setTimeout(() => window.location.href = 'start.html', 1000);
+          // setTimeout(() => window.location.href = 'start.html', 1000);
         }
       };
 
-      alert(`Game Over!\n🏆 Level Reached: ${level}\nUsername: ${username}`);
+      alert(`Game Over!\n🏆 Level Reached: ${level}`);
       await saveGame2Score();
       resetGame();
     } else {

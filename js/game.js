@@ -1,4 +1,4 @@
-const user = localStorage.getItem("user");
+const user = localStorage.getItem("currentUser");
 const mode = localStorage.getItem("mode");
 console.log("Logged in as:", user, "Mode:", mode);
 
@@ -81,36 +81,36 @@ function flipCard(card, val) {
     firstCard = null;
 
     if (matched === gameBoard.children.length) {
-  clearInterval(interval);
-  winSound.play();
+      clearInterval(interval);
+      winSound.play();
 
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  const username = currentUser.username || 'Anonymous';
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const username = currentUser.username || 'Anonymous';
 
-  const diffMap = { easy: '3x4', medium: '4x4', hard: '6x4' };
-  const difficulty = diffMap[difficultySelect.value];
+      const diffMap = { easy: '3x4', medium: '4x4', hard: '6x4' };
+      const difficulty = diffMap[difficultySelect.value];
 
-  const saveScore = async () => {
-    try {
-      await fetch('https://wfp.onrender.com/api/leaderboard', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, difficulty, time: timer, moves })
-      });
-    } catch (e) {
-      console.error('Save failed', e);
-    } finally {
-      setTimeout(() => window.location.href = 'start.html', 800);
+      const saveScore = async () => {
+        try {
+          await fetch('https://wfp.onrender.com/api/leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, difficulty, time: timer, moves })
+          });
+        } catch (e) {
+          console.error('Save failed', e);
+        } finally {
+          setTimeout(() => window.location.href = 'start.html', 800);
+        }
+      };
+
+      // setTimeout(() => {
+      //   alert(`🎉 Победа!
+      //   ⏱ Время: ${timer}s
+      //   🎯 Ходы: ${moves}`);
+      //   saveScore();
+      // }, 400);
     }
-  };
-
-  setTimeout(() => {
-    alert(`🎉 Победа!
-        ⏱ Время: ${timer}s
-        🎯 Ходы: ${moves}`);
-    saveScore();
-  }, 400);
-}
   } else {
     lockBoard = true;
     setTimeout(() => {
