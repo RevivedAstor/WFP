@@ -9,47 +9,74 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <a href="index.html" class="logo">
+        <nav class="top-nav">
+            <div class="nav-left">
+            <div class="logo">
                 <img src="images/MemoryLogo.png" alt="MemoryWebLogo">
-            </a>
-
-            <h1>About Us</h1>
-
+            </div>
+            <div class="nav-links">
+                <a href="start.html">Back</a>
+            </div>
+            </div>
+            
+            <div class="nav-center">
+                <h1>About Us</h1>
+            </div>
+            
+            <div class="nav-right">
             <button id="theme-toggle" class="theme-btn">🌙</button>
-        </nav>  
+            </div>
+        </nav>
     </header>
 
     <main>
     <section class="about">
         <div class="card">
             <h2>Our Mission</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
+            <p>We believe that learning can be fun and engaging. Our mission is to show that improving memory and learning is not just boring memorization, but also enjoyable through games. Through our games, people will discover that they can boost their skills in a fun and effective way.</p>
         </div>
         <div class="card">
             <h2>Our Vision</h2>
-            <p>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Sed porttitor lectus nibh.</p>
+            <p>Our vision is to inspire people everywhere to see learning as an enjoyable journey, where memory and skills grow through play.</p>
         </div>
     </section>
 
     <section class="team">
         <h2>Meet Our Team</h2>
-        <div class="team-members">
-            <div class="card member">
-                <img src="member1.jpg" alt="Team Member">
-                <h3>John Doe</h3>
-                <p>CEO</p>
+
+        <div class="slider-wrapper">
+            <button class="slide-btn left">❮</button>
+
+            <div class="team-slider">
+                <div class="card member">
+                    <img src="https://avatars.githubusercontent.com/u/176326763?s=400&v=4" alt="Yerkebulan">
+                    <h3>Saguyev Yerkebulan</h3>
+                    <p>Front-End Developer</p>
+                </div>
+                <div class="card member">
+                    <img src="https://avatars.githubusercontent.com/u/196063636?v=4" alt="Diar">
+                    <h3>Telgarin Diar</h3>
+                    <p>Front-End Developer</p>
+                </div>
+                <div class="card member">
+                    <img src="https://avatars.githubusercontent.com/u/198019855?v=4" alt="Arsen">
+                    <h3>Kairbekov Arsen</h3>
+                    <p>Front-End Developer</p>
+                </div>
+                <div class="card member">
+                    <img src="images/YernurAva.jpg" alt="Yernur">
+                    <h3>Aitkaliyev Yernur</h3>
+                    <p>Back-End Developer</p>
+                </div>
+                <div class="card member">
+                    <img src="https://avatars.githubusercontent.com/u/231671680?v=4" alt="Diyar">
+                    <h3>Yesset Diyar</h3>
+                    <p>QA & Project Support</p>
+                </div>
             </div>
-            <div class="card member">
-                <img src="member2.jpg" alt="Team Member">
-                <h3>Jane Smith</h3>
-                <p>CTO</p>
-            </div>
-            <div class="card member">
-                <img src="member3.jpg" alt="Team Member">
-                <h3>Mike Brown</h3>
-                <p>Designer</p>
-            </div>
+
+            <button class="slide-btn right">❯</button>
+
         </div>
     </section>
     </main>
