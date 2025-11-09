@@ -19,17 +19,16 @@ body{
 .navbar{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin: 15px 40px;
-  flex-wrap: wrap;
+  position: relative;
+  flex-wrap: nowrap;
 }
 
 .navbar h1{
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   font-weight: 600;
   transition: color 0.3s ease;
+  margin: 0;
 }
 
 .logo{
@@ -37,6 +36,15 @@ body{
   color: #7f0ba2;
   font-weight: 600;
   transition: color 0.3s ease;
+  position: absolute;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo img {
+  height: 130px;
 }
 
 .theme-btn{
@@ -53,6 +61,8 @@ body{
   padding: 8px;
   cursor: pointer;
   transition: 0.3s;
+  position: absolute;
+  right: 40px;
 }
 
 .theme-btn:hover{
@@ -72,11 +82,12 @@ main{
 .main-content-wrapper {
   display: flex;
   justify-content: center; 
-  align-items: flex-start;
+  align-items: center;
   gap: 40px;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   padding-top: 40px;
-  position: relative;
 }
 
 .container-custom{
@@ -95,7 +106,6 @@ main{
   min-height: 380px;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .right-section {
@@ -105,10 +115,6 @@ main{
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .leaderboard {
@@ -522,9 +528,9 @@ body.dark-theme button.close-modal-btn:hover{
 
 /* Responsive Design */
 @media (max-width: 1400px) {
-  .right-section {
-    position: static;
-    margin-left: 40px;
+  .main-content-wrapper {
+    max-width: 100%;
+    padding: 20px;
   }
 }
 
@@ -532,24 +538,31 @@ body.dark-theme button.close-modal-btn:hover{
   .main-content-wrapper {
     flex-direction: column;
     align-items: center;
+    gap: 30px;
   }
   
   .left-section,
   .right-section {
     width: 100%;
-    max-width: 768px;
-    margin: 0 auto 20px;
-    position: static;
+    max-width: 700px;
   }
   
-  .left-section {
-    max-width: 600px;
+  .right-section {
+    min-height: auto;
   }
 }
 
 @media (max-width: 992px) {
   .navbar {
     margin: 15px 30px;
+  }
+  
+  .logo {
+    left: 30px;
+  }
+  
+  .theme-btn {
+    right: 30px;
   }
   
   .navbar h1 {
@@ -568,30 +581,35 @@ body.dark-theme button.close-modal-btn:hover{
   .leaderboard h2 {
     font-size: 1.6rem;
   }
+  
+  .left-section,
+  .right-section {
+    max-width: 600px;
+  }
 }
 
 @media (max-width: 768px) {
   .navbar {
     margin: 15px 20px;
-    position: relative;
-  }
-  
-  .navbar h1 {
-    position: static;
-    transform: none;
-    width: 100%;
-    text-align: center;
-    order: 3;
-    margin-top: 15px;
-    font-size: 1.3rem;
+    flex-direction: column;
+    gap: 15px;
   }
   
   .logo {
-    order: 1;
+    position: static;
+  }
+  
+  .navbar h1 {
+    font-size: 1.3rem;
   }
   
   .theme-btn {
-    order: 2;
+    position: static;
+  }
+  
+  .main-content-wrapper {
+    gap: 20px;
+    padding: 15px;
   }
   
   .container-custom {
@@ -639,19 +657,20 @@ body.dark-theme button.close-modal-btn:hover{
     padding: 10px 12px;
   }
   
-  .left-section {
-    max-width: 500px;
+  .left-section,
+  .right-section {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 576px) {
   .navbar {
     margin: 10px 15px;
+    gap: 12px;
   }
   
   .navbar h1 {
     font-size: 1.1rem;
-    margin-top: 12px;
   }
   
   .logo {
@@ -665,7 +684,12 @@ body.dark-theme button.close-modal-btn:hover{
   }
   
   main {
-    padding: 15px;
+    padding: 10px;
+  }
+  
+  .main-content-wrapper {
+    padding: 10px;
+    gap: 15px;
   }
   
   .container-custom {
@@ -755,10 +779,6 @@ body.dark-theme button.close-modal-btn:hover{
   .leaderboard-time {
     font-size: 0.9rem;
   }
-  
-  .left-section {
-    max-width: 100%;
-  }
 }
 
 @media (max-width: 400px) {
@@ -768,6 +788,10 @@ body.dark-theme button.close-modal-btn:hover{
   
   .logo {
     font-size: 0.85rem;
+  }
+  
+  .logo img {
+    height: 100px;
   }
   
   .theme-btn {
@@ -796,17 +820,4 @@ body.dark-theme button.close-modal-btn:hover{
   .modal-content h2 {
     font-size: 1.2rem;
   }
-} 
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: #3a3a3a;
-  font-weight: 600;
 }
-.logo img {
-  height: 130px;
-}
-
