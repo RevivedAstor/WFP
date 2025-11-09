@@ -1,9 +1,12 @@
+// ==========================
+// GAME VARIABLES
+// ==========================
 let level = 1;
 let lives = 3;
-let targetCount = 1;
-let selectedCount = 0;
-let targets = [];
-let clickable = false;
+let targetCount = 1;        // сколько плиток нужно запомнить
+let selectedCount = 0;      // сколько уже выбрано
+let targets = [];           // индексы плиток, которые вспыхнут
+let clickable = false;      // можно ли кликать по плиткам
 
 const board = document.getElementById('board');
 const levelDisplay = document.getElementById('levelDisplay');
@@ -12,6 +15,9 @@ const startBtn = document.getElementById('startBtn');
 const backBtn = document.getElementById('backBtn');
 const themeBtn = document.getElementById('themeBtn');
 
+// ==========================
+// UTILITY FUNCTIONS
+// ==========================
 function updateStatus() {
   levelDisplay.textContent = `Level: ${level}`;
   livesDisplay.textContent = 'Lives: ' + '❤️'.repeat(lives);
@@ -25,23 +31,28 @@ function shuffle(array) {
   return array;
 }
 
+// ==========================
+// SETUP & GAME LOGIC
+// ==========================
 function setupBoard() {
   board.innerHTML = '';
   targetCount = level;
   const totalTiles = Math.max(targetCount * targetCount, 4);
-  const gridSize = Math.sqrt(totalTiles);
+  const gridSize = Math.ceil(Math.sqrt(totalTiles));
   board.style.gridTemplateColumns = `repeat(${gridSize}, 70px)`;
   board.style.gridTemplateRows = `repeat(${gridSize}, 70px)`;
 
+  // создаём плитки с чередующимися фиолетовыми и розовыми цветами
   for (let i = 0; i < totalTiles; i++) {
     const tile = document.createElement('div');
     tile.classList.add('card');
     tile.dataset.index = i;
 
+    const color = i % 2 === 0 ? '#7b2cbf' : '#f72585'; // чередуем фиолетовый и розовый
     tile.innerHTML = `
       <div class="inner">
-        <div class="front"></div>
-        <div class="back">?</div>
+        <div class="front">⭐</div>
+        <div class="back" style="background:${color}">?</div>
       </div>
     `;
 
@@ -49,9 +60,9 @@ function setupBoard() {
     board.appendChild(tile);
   }
 
+  // выбираем targetCount плиток для показа
   targets = shuffle([...Array(totalTiles).keys()]).slice(0, targetCount);
 }
-
 
 function showTargetsThenHide() {
   const tiles = board.querySelectorAll('.card');
@@ -73,10 +84,11 @@ function onTileClick(e) {
   if (targets.includes(idx)) {
     selectedCount++;
     if (selectedCount === targetCount) {
+      // победа уровня
       level++;
       clickable = false;
       updateStatus();
-      setTimeout(startRound, 500);
+      setTimeout(startRound, 700);
     }
   } else {
     lives--;
@@ -86,7 +98,7 @@ function onTileClick(e) {
       alert(`Game Over! You reached level ${level}`);
       resetGame();
     } else {
-      setTimeout(startRound, 500);
+      setTimeout(startRound, 700);
     }
   }
 }
@@ -121,4 +133,5 @@ themeBtn.addEventListener('click', () => {
   themeBtn.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
 });
 
+// инициализация
 updateStatus();

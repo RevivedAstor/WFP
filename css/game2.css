@@ -52,7 +52,7 @@ button:hover {
 }
 .board {
   display: grid;
-  gap: 12px;
+  gap: 6px;
   justify-content: center;
   margin: 20px;
 }
@@ -88,12 +88,21 @@ button:hover {
 }
 .card .front {
   background: #fff;
-  color: #7b2cbf;
+  color: #ffdd00; 
   transform: rotateY(180deg);
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 .card .back {
-  background: #7b2cbf;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
 }
 /* Dark theme */
 body.dark {
@@ -131,4 +140,21 @@ body.dark .card .back {
 #backBtn:hover {
   background: #9b4aff;
   transform: translateY(-2px);
+}
+
+.card:nth-child(even) .back {
+  background: #9b4aff; 
+}
+.card:nth-child(odd) .back {
+  background: #ff6f91; 
+}
+
+.card.flip .front {
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95) rotateY(180deg); }
+  50% { transform: scale(1.1) rotateY(180deg); }
+  100% { transform: scale(1) rotateY(180deg); }
 }
