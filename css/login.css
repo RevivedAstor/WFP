@@ -10,6 +10,11 @@
 body{
     background-color: #c9d6ff;
     background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    overflow: hidden;  
+}
+
+header{
+    height: 8vh;
 }
 
 main{
@@ -294,12 +299,6 @@ body.dark-theme .toggle {
 
 body.dark-theme button:hover {
   background-color: #8b5cf6;
-}
-
-body.dark-theme select {
-  background-color: #333333;
-  color: #e5e5e5;
-  border: 1px solid #4a4a4a;
 }
 
 .logo {

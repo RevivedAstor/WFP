@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    overflow-x: hidden; 
+}
+
+header{
+    height: 8vh;
+}
+
+main{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+footer{
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.navbar h1{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 600;
+}
+
+.theme-btn{
+    background-color: #ffffff;  
+    border: 5px; 
+    width: 40px;                 
+    height: 40px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #960fd0;            
+    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-btn:hover{
+    background-color: #960fd0;
+    color: #fff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #3a3a3a;
+  font-weight: 600;
+}
+
+.logo img {
+  height: 60px;
+}
+
+body.dark-theme {
+  background: linear-gradient(to right, #1a1a1a, #2d2d30);
+  color: #f4f4f4;
+}
+
+body.dark-theme .container {
+  background-color: #252525;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+  color: #e5e5e5;
+}
+
+body.dark-theme .navbar h1,
+body.dark-theme .logo,
+body.dark-theme footer {
+  color: #e5e5e5;
+}
+
+body.dark-theme .theme-btn {
+  background-color: #3a3a3a;
+  color: #fbbf24;
+}
+
+body.dark-theme .theme-btn:hover {
+  background-color: #4a4a4a;
+  color: #fcd34d;
+}
+
+body.dark-theme button {
+  background-color: #7c3aed;
+}
+
+body.dark-theme .toggle-container{
+    background-color: #7c3aed;
+}
+
+body.dark-theme .toggle {
+    background: inherit;
+}
+
+body.dark-theme button:hover {
+  background-color: #8b5cf6;
+}
+
+/* Общие карточки */
+.card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* About Section */
+.about {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 80px 20px;
+}
+
+/* Team Section */
+.team-members {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.member img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
