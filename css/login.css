@@ -142,21 +142,6 @@ footer{
     }
 }
 
-.social-icons{
-    margin: 20px 0;
-}
-
-.social-icons a{
-    border: 1px solid #ccc;
-    border-radius: 20%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
-}
-
 .toggle-container{
     position: absolute;
     top: 0;
@@ -258,8 +243,6 @@ footer{
     color: #fff;
 }
 
-
-
 body.dark-theme {
   background: linear-gradient(to right, #1a1a1a, #2d2d30);
   color: #f4f4f4;
@@ -275,10 +258,6 @@ body.dark-theme .container form {
   background: transparent; 
   box-shadow: none;        
   color: #e5e5e5;
-}
-
-body.dark-theme .container.active .toggle {
-    background: linear-gradient(#7c3aed);
 }
 
 body.dark-theme .navbar h1,
@@ -305,29 +284,17 @@ body.dark-theme button {
   background-color: #7c3aed;
 }
 
-body.dark-theme .toggle-panel {
-  background-color: #7c3aed;
+body.dark-theme .toggle-container{
+    background-color: #7c3aed;
 }
 
+body.dark-theme .toggle {
+    background: inherit;
+}
 
 body.dark-theme button:hover {
   background-color: #8b5cf6;
 }
-
-body.dark-theme .modal {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-body.dark-theme .modal-content {
-  background-color: #2a2a2a;
-  color: #e5e5e5;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
-}
-
-body.dark-theme .modal-content h2 {
-  color: #b794f6;
-}
-
 
 body.dark-theme select {
   background-color: #333333;
