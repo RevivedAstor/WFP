@@ -252,16 +252,16 @@ $(document).ready(function () {
 
 	$('#themeBtn').on('click', function () {
 		const darkMode = $('body').toggleClass('dark-theme').hasClass('dark-theme');
-		$(this).text(darkMode ? '🌙' : '☀️');
+		$(this).text(darkMode ? '☀️' : '🌙');
 		localStorage.setItem('theme', darkMode ? 'dark' : 'light');
 	});
 
 	const savedTheme = localStorage.getItem('theme');
 	if (savedTheme === 'dark') {
 		$('body').addClass('dark-theme');
-		$('#themeBtn').text('🌙');
-	} else {
 		$('#themeBtn').text('☀️');
+	} else {
+		$('#themeBtn').text('🌙');
 	}
 
 	let savedLang = localStorage.getItem('language');
