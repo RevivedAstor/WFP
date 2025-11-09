@@ -90,7 +90,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  backface-visibility: hidden;
+  backface-visibility: hidden;  
   border-radius: 14px;
   font-size: 32px;
 }
@@ -133,3 +133,8 @@ body.dark .back {
   padding: 20px;
   min-height: 350px;
 }
+
+.card.matched .inner {
+  box-shadow: 0 0 20px 4px rgba(0, 255, 100, 0.8);
+}
+
