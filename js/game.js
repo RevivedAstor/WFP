@@ -121,3 +121,18 @@ backBtn.onclick = () => {
 
 
 startGame();
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark');
+  themeToggle.textContent = '☀️';
+} else {
+  document.body.classList.remove('dark');
+  themeToggle.textContent = '🌙';
+}
+
+themeToggle.onclick = () => {
+  const isDark = document.body.classList.toggle("dark");
+  themeToggle.textContent = isDark ? "☀️" : "🌙";
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+};
