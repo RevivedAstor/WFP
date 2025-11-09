@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(130deg, #e4e7ff, #c8d4ff, #bcc9ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  transition: 0.3s;
+}
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.theme-toggle {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+.theme-toggle:hover {
+  opacity: 0.9;
+}
+.controls {
+  margin: 20px;
+}
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #7b2cbf;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.3s;
+}
+button:hover {
+  background: #9b4aff;
+}
+.board {
+  display: grid;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px;
+}
+.card {
+  width: 70px;
+  height: 70px;
+  perspective: 600px;
+  cursor: pointer;
+}
+.card .inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+.card.flip .inner {
+  transform: rotateY(180deg);
+}
+.card .front, .card .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 700;
+}
+.card .front {
+  background: #fff;
+  color: #7b2cbf;
+  transform: rotateY(180deg);
+}
+.card .back {
+  background: #7b2cbf;
+  color: #fff;
+}
+/* Dark theme */
+body.dark {
+  background: linear-gradient(135deg, #101020, #191b2e, #20243a);
+  color: #eee;
+}
+body.dark button {
+  background: #9b4aff;
+  color: #fff;
+}
+body.dark .card .back {
+  background: #9b4aff;
+}
+.info {
+  display: flex;
+  gap: 20px;
+  font-size: 18px;
+}
+#levelDisplay, #livesDisplay {
+  background: rgba(255,255,255,0.3);
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+#backBtn {
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #7b2cbf;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+#backBtn:hover {
+  background: #9b4aff;
+  transform: translateY(-2px);
+}

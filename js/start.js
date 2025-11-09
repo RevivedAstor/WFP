@@ -1,13 +1,19 @@
 // buttons
 document.getElementById('selectGameBtn')?.addEventListener('click', () => {
-	localStorage.setItem('mode', 'new');
-	window.location.href = 'game.html';
+    document.getElementById('gameChoices').classList.remove('hidden');
+    document.getElementById('selectGameBtn').classList.add('hidden'); 
 });
 
-document.getElementById('continueBtn')?.addEventListener('click', () => {
-	localStorage.setItem('mode', 'continue');
-	window.location.href = 'game.html';
+document.getElementById('playGame1Btn')?.addEventListener('click', () => {
+    localStorage.setItem('selectedGame', 'game1');
+    window.location.href = 'game.html';
 });
+
+document.getElementById('playGame2Btn')?.addEventListener('click', () => {
+    localStorage.setItem('selectedGame', 'game2');
+    window.location.href = 'game2.html';
+});
+
 
 // Leaderboard API functions
 async function fetchLeaderboard(difficulty = 'all') {
