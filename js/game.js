@@ -86,7 +86,7 @@ function flipCard(card, val) {
       winSound.play();
 
       const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      const name = user.name || 'Player';
+      const username = user.name || 'Player';
 
       const diffMap = { easy: '3x4', medium: '4x4', hard: '6x4' };
       const difficulty = diffMap[difficultySelect.value];
@@ -96,7 +96,7 @@ function flipCard(card, val) {
           await fetch('https://wfp.onrender.com/api/leaderboard', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, difficulty, time: timer, moves })
+            body: JSON.stringify({ username, difficulty, time: timer, moves })
           });
         } catch (e) {
           console.error('Save failed', e);

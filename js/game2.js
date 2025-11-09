@@ -98,12 +98,12 @@ async function onTileClick(e) {
       // ----- SAVE TO BACKEND -----
       const saveGame2Score = async () => {
         const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-        const name = user.name || 'Player';
+        const username = user.name || 'Player';
         try {
           const resp = await fetch('https://wfp.onrender.com/api/leaderboard/game2', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, level })
+            body: JSON.stringify({ username, level })
           });
           if (!resp.ok) throw new Error('Network error');
           console.log('Game 2 score saved!');
