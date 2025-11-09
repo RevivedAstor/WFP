@@ -86,29 +86,29 @@ function flipCard(card, val) {
       winSound.play();
 
       const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      const username = user.name || 'Player';
+      const name = user.name || 'Player';
 
       const diffMap = { easy: '3x4', medium: '4x4', hard: '6x4' };
       const difficulty = diffMap[difficultySelect.value];
 
       const saveScore = async () => {
         try {
-          const resp = await fetch('https://wfp.onrender.com/api/leaderboard', {
+          await fetch('https://wfp.onrender.com/api/leaderboard', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, difficulty, time: timer, moves }) 
+            body: JSON.stringify({ name, difficulty, time: timer, moves })
           });
-          if (!resp.ok) throw new Error('Save failed');
-          console.log('✅ Game 1 saved:', username, difficulty, timer, moves);
         } catch (e) {
-          console.error('❌ Save failed:', e);
+          console.error('Save failed', e);
         } finally {
-          setTimeout(() => window.location.href = 'start.html', 800);  
+          setTimeout(() => window.location.href = 'start.html', 800);
         }
       };
 
       setTimeout(() => {
-        alert(`🎉 Победа!\n⏱ Время: ${timer}s\n🎯 Ходы: ${moves}`);
+        alert(`🎉 Победа!
+        ⏱ Время: ${timer}s
+        🎯 Ходы: ${moves}`);
         saveScore();
       }, 400);
     }
@@ -129,31 +129,27 @@ difficultySelect.onchange = () => {
   startGame();
 };
 
-themeToggle.onclick = () => {
-  document.body.classList.toggle("dark");
-  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
-};
-
 const backBtn = document.getElementById("backBtn");
 
 backBtn.onclick = () => {
   window.location.href = "start.html";
 };
 
-
-startGame();
-
+// Инициализация темы при загрузке
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
   document.body.classList.add('dark');
-  themeToggle.textContent = '☀️';
+  themeToggle.textContent = '🌙';
 } else {
   document.body.classList.remove('dark');
-  themeToggle.textContent = '🌙';
+  themeToggle.textContent = '☀️';
 }
 
+// Переключение темы
 themeToggle.onclick = () => {
   const isDark = document.body.classList.toggle("dark");
-  themeToggle.textContent = isDark ? "☀️" : "🌙";
+  themeToggle.textContent = isDark ? "🌙" : "☀️";
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
+
+startGame();
