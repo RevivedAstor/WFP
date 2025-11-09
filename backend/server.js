@@ -4,7 +4,7 @@ import cors from 'cors';
 import pool from './db.js';
 
 import userRoutes from './routes/users.js';
-import leaderboardRoutes from './routes/leaderbaord.js';
+import leaderboardRoutes from './routes/leaderboard.js';
 
 dotenv.config();
 
