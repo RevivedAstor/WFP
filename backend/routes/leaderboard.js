@@ -44,8 +44,8 @@ router.post('/', async (req, res) => {
     try {
         const { rows } = await pool.query(
             `INSERT INTO game_match (username, difficulty, time, moves)
-       VALUES ($1, $2, $3, $4)
-       RETURNING *`,
+            VALUES ($1, $2, $3, $4)
+            RETURNING *`,
             [username, difficulty, Number(time), Number(moves)]
         );
         res.status(201).json(rows[0]);
@@ -54,3 +54,30 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 })
+
+
+
+// Game 2
+// POST /api/leaderbaord/game2
+router.post('/game2', async (req, res) => {
+    const { username, level } = req.body;
+
+    if (!username || level == null || level < 1) {
+        return res.status(400).json({ error: 'Invalid data' });
+    }
+
+    try {
+        const { rows } = await pool.query(
+            `INSERT INTO advanced (username, level)
+            VALUES ($1, $2)
+            RETURNING *`,
+            [username, Number(level)]
+        );
+        res.status(201).json(rows[0]);
+    } catch (err) {
+        console.error('POST advanced error:', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+export default router;

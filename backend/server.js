@@ -2,7 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import pool from './db.js';
+
 import userRoutes from './routes/users.js';
+import leaderboardRoutes from './routes/leaderbaord.js';
 
 dotenv.config();
 
@@ -10,12 +12,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(cors({
-  origin: '*'  // or specify your frontend domain later
-}));
+app.use(cors({ origin: '*' }));
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/leaderboard', leaderboardRoutes);
+
 
 // Test route
 app.get('/api/test', async (req, res) => {

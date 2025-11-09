@@ -1,3 +1,10 @@
+const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+const username = currentUser.username || 'Anonymous';
+
+
+
+
+
 // ==========================
 // GAME VARIABLES
 // ==========================
@@ -95,7 +102,26 @@ function onTileClick(e) {
     clickable = false;
     updateStatus();
     if (lives <= 0) {
-      alert(`Game Over! You reached level ${level}`);
+      // ----- SAVE TO BACKEND -----
+      const saveGame2Score = async () => {
+        try {
+          const resp = await fetch('https://wfp.onrender.com/api/leaderboard/game2', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, level })
+          });
+          if (!resp.ok) throw new Error('Network error');
+          console.log('Game 2 score saved!');
+        } catch (e) {
+          console.error('Save failed', e);
+          alert('Score saved locally');
+        } finally {
+          setTimeout(() => window.location.href = 'start.html', 1000);
+        }
+      };
+
+      alert(`Game Over!\n🏆 Level Reached: ${level}\nUsername: ${username}`);
+      await saveGame2Score();
       resetGame();
     } else {
       setTimeout(startRound, 700);
