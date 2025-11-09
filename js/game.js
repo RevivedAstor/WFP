@@ -139,16 +139,16 @@ backBtn.onclick = () => {
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
   document.body.classList.add('dark');
-  themeToggle.textContent = '🌙';
+  themeToggle.textContent = '☀️';
 } else {
   document.body.classList.remove('dark');
-  themeToggle.textContent = '☀️';
+  themeToggle.textContent = '🌙';
 }
 
 // Переключение темы
 themeToggle.onclick = () => {
   const isDark = document.body.classList.toggle("dark");
-  themeToggle.textContent = isDark ? "🌙" : "☀️";
+  themeToggle.textContent = isDark ? "☀️" : "🌙";
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 

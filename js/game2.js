@@ -153,16 +153,16 @@ backBtn.addEventListener('click', () => {
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
   document.body.classList.add('dark');
-  themeBtn.textContent = '🌙';
+  themeBtn.textContent = '☀️';
 } else {
   document.body.classList.remove('dark');
-  themeBtn.textContent = '☀️';
+  themeBtn.textContent = '🌙';
 }
 
 // Переключение темы
 themeBtn.addEventListener('click', () => {
   const isDark = document.body.classList.toggle('dark');
-  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  themeBtn.textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
