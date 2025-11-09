@@ -1,4 +1,5 @@
-const user = localStorage.getItem("currentUser");
+const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+const name = user.name || 'Player';
 const mode = localStorage.getItem("mode");
 console.log("Logged in as:", user, "Mode:", mode);
 
@@ -84,8 +85,8 @@ function flipCard(card, val) {
       clearInterval(interval);
       winSound.play();
 
-      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      const username = currentUser.username || 'Anonymous';
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const name = user.name || 'Player';
 
       const diffMap = { easy: '3x4', medium: '4x4', hard: '6x4' };
       const difficulty = diffMap[difficultySelect.value];
@@ -95,7 +96,7 @@ function flipCard(card, val) {
           await fetch('https://wfp.onrender.com/api/leaderboard', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, difficulty, time: timer, moves })
+            body: JSON.stringify({ name, difficulty, time: timer, moves })
           });
         } catch (e) {
           console.error('Save failed', e);
@@ -104,12 +105,12 @@ function flipCard(card, val) {
         }
       };
 
-      // setTimeout(() => {
-      //   alert(`🎉 Победа!
-      //   ⏱ Время: ${timer}s
-      //   🎯 Ходы: ${moves}`);
-      //   saveScore();
-      // }, 400);
+      setTimeout(() => {
+        alert(`🎉 Победа!
+        ⏱ Время: ${timer}s
+        🎯 Ходы: ${moves}`);
+        saveScore();
+      }, 400);
     }
   } else {
     lockBoard = true;

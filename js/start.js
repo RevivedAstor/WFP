@@ -1,35 +1,33 @@
 // buttons
 document.getElementById('selectGameBtn')?.addEventListener('click', () => {
-    document.getElementById('gameChoices').classList.remove('hidden');
-    document.getElementById('selectGameBtn').classList.add('hidden'); 
+	document.getElementById('gameChoices').classList.remove('hidden');
+	document.getElementById('selectGameBtn').classList.add('hidden');
 });
 
 document.getElementById('playGame1Btn')?.addEventListener('click', () => {
-    localStorage.setItem('selectedGame', 'game1');
-    window.location.href = 'game.html';
+	localStorage.setItem('selectedGame', 'game1');
+	window.location.href = 'game.html';
 });
 
 document.getElementById('playGame2Btn')?.addEventListener('click', () => {
-    localStorage.setItem('selectedGame', 'game2');
-    window.location.href = 'game2.html';
+	localStorage.setItem('selectedGame', 'game2');
+	window.location.href = 'game2.html';
 });
 
 
 // Leaderboard API functions
-async function fetchLeaderboard(difficulty = 'all') {
+async function fetchLeaderboard(filter = 'all') {
 	try {
-		const url = difficulty === 'all' 
-			? 'https://wfp.onrender.com/api/leaderboard'
-			: `https://wfp.onrender.com/api/leaderboard?difficulty=${difficulty}`;
-		
-		const response = await fetch(url);
-		
-		if (!response.ok) {
-			throw new Error('Failed to fetch leaderboard');
+		let url = 'https://wfp.onrender.com/api/leaderboard';
+		if (filter === 'game2') {
+			url += '/game2';
+		} else if (filter !== 'all') {
+			url += `?difficulty=${filter}`;
 		}
-		
-		const data = await response.json();
-		return data;
+
+		const response = await fetch(url);
+		if (!response.ok) throw new Error('Failed to fetch');
+		return await response.json();
 	} catch (error) {
 		console.error('Error fetching leaderboard:', error);
 		return [];
@@ -47,11 +45,11 @@ async function saveGameResult(username, difficulty, time) {
 				time
 			})
 		});
-		
+
 		if (!response.ok) {
 			throw new Error('Failed to save game result');
 		}
-		
+
 		const data = await response.json();
 		return data;
 	} catch (error) {
@@ -66,46 +64,59 @@ function formatTime(seconds) {
 	return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
 }
 
-function renderLeaderboard(data) {
+function renderLeaderboard(data, filter = 'all') {
 	const leaderboardList = document.getElementById('leaderboardList');
-	
+
 	if (!data || data.length === 0) {
 		leaderboardList.innerHTML = '<div class="empty-leaderboard">No records yet. Be the first!</div>';
 		return;
 	}
-	
+
 	let html = '';
 	data.forEach((entry, index) => {
 		const rank = index + 1;
 		let rankClass = 'leaderboard-rank';
-		
 		if (rank === 1) rankClass += ' gold';
 		else if (rank === 2) rankClass += ' silver';
 		else if (rank === 3) rankClass += ' bronze';
-		
-		const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
-		
-		html += `
-			<div class="leaderboard-item">
-				<div class="${rankClass}">${medal}</div>
-				<div class="leaderboard-info">
-					<div class="leaderboard-name">${entry.username || 'Anonymous'}</div>
-					<div class="leaderboard-details">${entry.difficulty || 'Unknown'} • ${new Date(entry.date || Date.now()).toLocaleDateString()}</div>
-				</div>
-				<div class="leaderboard-time">${formatTime(entry.time)}</div>
-			</div>
-		`;
+		const medal = rank === 1 ? 'First' : rank === 2 ? 'Second' : rank === 3 ? 'Third' : rank;
+
+		if (filter === 'game2') {
+			// Game 2: Show Level
+			html += `
+        <div class="leaderboard-item">
+          <div class="${rankClass}">${medal}</div>
+          <div class="leaderboard-info">
+            <div class="leaderboard-name">${entry.username || 'Anonymous'}</div>
+            <div class="leaderboard-details">Advanced • ${new Date(entry.date).toLocaleDateString()}</div>
+          </div>
+          <div class="leaderboard-time">Level ${entry.level}</div>
+        </div>
+      `;
+		} else {
+			// Game 1: Show Time
+			html += `
+        <div class="leaderboard-item">
+          <div class="${rankClass}">${medal}</div>
+          <div class="leaderboard-info">
+            <div class="leaderboard-name">${entry.username || 'Anonymous'}</div>
+            <div class="leaderboard-details">${entry.difficulty || 'Unknown'} • ${new Date(entry.date).toLocaleDateString()}</div>
+          </div>
+          <div class="leaderboard-time">${formatTime(entry.time)}</div>
+        </div>
+      `;
+		}
 	});
-	
+
 	leaderboardList.innerHTML = html;
 }
 
-async function loadLeaderboard(difficulty = 'all') {
+async function loadLeaderboard(filter = 'all') {
 	const leaderboardList = document.getElementById('leaderboardList');
 	leaderboardList.innerHTML = '<div class="loading-spinner">Loading...</div>';
-	
-	const data = await fetchLeaderboard(difficulty);
-	renderLeaderboard(data);
+
+	const data = await fetchLeaderboard(filter);
+	renderLeaderboard(data, filter);
 }
 
 // Expose function globally so game.html can call it
@@ -197,7 +208,7 @@ $(document).ready(function () {
 		$('.setting label').eq(1).text(t.gridSize);
 		$('#applyBtn').text(t.apply);
 		$('#settingsModal .close-modal-btn').text(t.close);
-		
+
 		$('.leaderboard h2').text(t.leaderboard);
 		$('#difficultyFilter option[value="all"]').text(t.allDifficulties);
 
@@ -271,6 +282,11 @@ $(document).ready(function () {
 
 	// Initial leaderboard load
 	loadLeaderboard('all');
+
+	$('#difficultyFilter').on('change', function () {
+		const filter = $(this).val();
+		loadLeaderboard(filter);
+	});
 
 	$(document).on('keydown', function (e) {
 		if (e.key === 'Escape') {
