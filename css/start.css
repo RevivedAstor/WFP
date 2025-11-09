@@ -153,10 +153,10 @@ main{
 }
 
 .right-section {
-  flex: 1;
-  min-width: 400px;
-  max-width: 600px;
-  padding: 30px 40px;
+  flex: 0.8;
+  min-width: 350px;
+  max-width: 450px;
+  padding: 30px 35px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
