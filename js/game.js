@@ -86,29 +86,29 @@ function flipCard(card, val) {
       winSound.play();
 
       const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      const name = user.name || 'Player';
+      const username = user.name || 'Player';
 
       const diffMap = { easy: '3x4', medium: '4x4', hard: '6x4' };
       const difficulty = diffMap[difficultySelect.value];
 
       const saveScore = async () => {
         try {
-          await fetch('https://wfp.onrender.com/api/leaderboard', {
+          const resp = await fetch('https://wfp.onrender.com/api/leaderboard', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, difficulty, time: timer, moves })
+            body: JSON.stringify({ username, difficulty, time: timer, moves }) 
           });
+          if (!resp.ok) throw new Error('Save failed');
+          console.log('✅ Game 1 saved:', username, difficulty, timer, moves);
         } catch (e) {
-          console.error('Save failed', e);
+          console.error('❌ Save failed:', e);
         } finally {
-          setTimeout(() => window.location.href = 'start.html', 800);
+          setTimeout(() => window.location.href = 'start.html', 800);  
         }
       };
 
       setTimeout(() => {
-        alert(`🎉 Победа!
-        ⏱ Время: ${timer}s
-        🎯 Ходы: ${moves}`);
+        alert(`🎉 Победа!\n⏱ Время: ${timer}s\n🎯 Ходы: ${moves}`);
         saveScore();
       }, 400);
     }
