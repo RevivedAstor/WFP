@@ -1,9 +1,3 @@
-// const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-// const name = user.name || 'Player';
-
-
-
-
 // ==========================
 // GAME VARIABLES
 // ==========================
@@ -101,22 +95,23 @@ async function onTileClick(e) {
     clickable = false;
     updateStatus();
     if (lives <= 0) {
-      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      const username = user.name || 'Player';
-
+      // ----- SAVE TO BACKEND -----
       const saveGame2Score = async () => {
+        const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        const name = user.name || 'Player';
         try {
           const resp = await fetch('https://wfp.onrender.com/api/leaderboard/game2', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, level })  
+            body: JSON.stringify({ name, level })
           });
-          if (!resp.ok) throw new Error('Save failed');
-          console.log('✅ Game 2 saved:', username, level);
+          if (!resp.ok) throw new Error('Network error');
+          console.log('Game 2 score saved!');
         } catch (e) {
-          console.error('❌ Save failed:', e);
+          console.error('Save failed', e);
+          alert('Score saved locally');
         } finally {
-          setTimeout(() => window.location.href = 'start.html', 1000); 
+          setTimeout(() => window.location.href = 'start.html', 1000);
         }
       };
 
@@ -154,9 +149,21 @@ backBtn.addEventListener('click', () => {
   window.location.href = 'start.html';
 });
 
+// Инициализация темы при загрузке
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark');
+  themeBtn.textContent = '🌙';
+} else {
+  document.body.classList.remove('dark');
+  themeBtn.textContent = '☀️';
+}
+
+// Переключение темы
 themeBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  themeBtn.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+  const isDark = document.body.classList.toggle('dark');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
 // инициализация
